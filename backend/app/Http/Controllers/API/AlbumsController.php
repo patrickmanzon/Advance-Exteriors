@@ -16,7 +16,7 @@ class AlbumsController extends Controller
      */
     public function index()
     {
-        $albums = Album::all();
+        $albums = Album::with('user')->latest()->paginate(10);
         
 
         return response()->json([

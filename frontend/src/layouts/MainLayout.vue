@@ -13,7 +13,7 @@
     >
       <q-list>
         <q-item-label
-          class="bg-darker text-white q-py-lg q-px-lg flex justify-between"
+          class="bg-darker text-white q-py-lg q-px-lg flex justify-between q-mb-lg"
         >
           <span class="text-h5">Advance Exteriors</span>
           <q-btn
@@ -39,8 +39,9 @@
         </q-item>
         <EssentialLink
           v-for="link in essentialLinks"
-          :key="link.title"
+          :key="link.key"
           v-bind="link"
+          :label="!!link.label"
           class="q-my-sm"
         />
       </q-list>
@@ -61,58 +62,91 @@ import Header from 'components/Header.vue'
 const linksData = [
   {
     title: 'Dasboard',
-    icon: 'school',
-    link: '#'
+    icon: 'grid_view',
+    link: '#',
+    key: Math.random()
+  },
+  {
+    title: 'CUSTOM',
+    label: true,
+    key: Math.random()
   },
   {
     title: 'Employee',
-    icon: 'code',
-    link: '#'
-  },
-  {
-    title: 'Subcontructor',
-    icon: 'record_voice_over',
-    link: '#'
-  },
-  {
-    title: 'Supplier',
-    icon: 'rss_feed',
-    link: '#'
-  },
-  {
-    title: 'Users',
-    icon: 'favorite',
-    link: '#'
-  },
-  {
-    title: 'File Upload',
-    icon: 'favorite',
-    link: '#'
-  },
-  {
-    title: 'Widgets',
-    icon: 'favorite',
-    link: '#'
+    icon: 'grid_view',
+    link: '#',
+    key: Math.random()
   },
   {
     title: 'Calendar',
-    icon: 'favorite',
-    link: '#'
+    icon: 'event',
+    link: '#',
+    key: Math.random()
+  },
+  {
+    title: 'FEATURE',
+    label: true,
+    key: Math.random()
+  },
+  {
+    title: 'Subcontructor',
+    icon: 'grid_view',
+    link: '#',
+    key: Math.random()
+  },
+  {
+    title: 'Supplier',
+    icon: 'inventory_2',
+    link: '#',
+    key: Math.random()
+  },
+  {
+    title: 'Calendar',
+    icon: 'event',
+    link: '#',
+    key: Math.random()
+  },
+  {
+    title: 'Users',
+    icon: 'people',
+    link: '#',
+    key: Math.random()
+  },
+  {
+    title: 'File Upload',
+    icon: 'file_upload',
+    link: '#',
+    key: Math.random()
+  },
+  {
+    title: 'Widgets',
+    icon: 'widgets',
+    link: '#',
+    key: Math.random()
+  },
+  {
+    title: 'Calendar',
+    icon: 'event',
+    link: '#',
+    key: Math.random()
   },
   {
     title: 'Charts',
-    icon: 'favorite',
-    link: '#'
+    icon: 'signal_cellular_alt',
+    link: '#',
+    key: Math.random()
   },
   {
     title: 'Maps',
-    icon: 'favorite',
-    link: '#'
+    icon: 'map',
+    link: '#',
+    key: Math.random()
   },
   {
     title: 'Miscellaneous',
-    icon: 'favorite',
-    link: '#'
+    icon: 'account_balance_wallet',
+    link: '#',
+    key: Math.random()
   },
 ];
 

@@ -71,7 +71,8 @@
           </div>
 
           <div class="q-mr-sm">
-            <button class="text-blue-7" @click="addContacts">Add Contacts</button>
+            <button class="text-blue-7" @click="addContacts" v-if="this.$route.path == '/users'">Add Contacts</button>
+            <button class="text-blue-7" @click="addAlbums" v-if="this.$route.path == '/albums'">Add Albums</button>
           </div>
 
       </div>
@@ -88,6 +89,10 @@ export default {
       },
       addContacts() {
         this.$root.$emit('addContacts')
+      },
+      addAlbums() {
+        this.$root.$emit('addAlbums')
+
       }
     }
 

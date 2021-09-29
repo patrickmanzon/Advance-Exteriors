@@ -1,22 +1,37 @@
 <template>
-  <q-item
-    clickable
-    tag="a"
-    target="_blank"
-    :href="link"
-    class="row items-center"
-  >
-    <q-item-section
-      v-if="icon"
-      avatar
+  <div>
+    <q-item
+      clickable
+      tag="a"
+      target="_blank"
+      :href="link"
+      class="row items-center"
+      v-if="!label"
     >
-      <q-icon :name="icon" />
-    </q-item-section>
+      <q-item-section
+        v-if="icon"
+        avatar
+      >
+        <q-icon :name="icon" />
+      </q-item-section>
 
+      <q-item-section>
+        <q-item-label class="sidebar-text">{{ title }}</q-item-label>
+      </q-item-section>
+    </q-item>
+
+    <q-item
+      target="_blank"
+      :href="link"
+      class="row items-center"
+      v-else
+    >
     <q-item-section>
-      <q-item-label class="sidebar-text">{{ title }}</q-item-label>
-    </q-item-section>
-  </q-item>
+        <q-item-label class="header-label">{{ title }}</q-item-label>
+      </q-item-section>
+    </q-item>
+
+  </div>
 </template>
 
 <script>
@@ -41,6 +56,10 @@ export default {
     icon: {
       type: String,
       default: ''
+    },
+
+    label: {
+      type: Boolean
     }
   }
 }

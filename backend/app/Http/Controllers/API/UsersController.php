@@ -16,9 +16,13 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::latest()->paginate(10);
+
+        if($request->has('all')) {
+            $users =  User::latest()->get();
+        }
 
         return response()->json([
             'users' => $users
