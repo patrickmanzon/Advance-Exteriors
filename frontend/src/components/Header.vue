@@ -72,19 +72,19 @@
         </div>
       </q-toolbar>
 
-      <div class="q-pl-md bg-white secondary-header" :class="!$q.screen.lt.md ? 'row justify-between items-center' : ''">
+      <div class="q-pl-md bg-white secondary-header" :class="!$q.screen.lt.sm ? 'row justify-between items-center' : ''">
           <div class="row items-center">
-            <p class="q-py-md" :class="!$q.screen.lt.md ? 'q-px-lg' : 'q-px-sm'">Contacts</p>
+            <p class="q-py-md" :class="!$q.screen.lt.sm ? 'q-px-lg' : 'q-px-sm'">Contacts</p>
             <div class="search q-ml-md">
-              <input type="text" placeholder="Search" :style="!$q.screen.lt.md ? '' : 'width:220px;'">
+              <input type="text" placeholder="Search" :style="!$q.screen.lt.sm ? '' : 'width:220px;'">
               <q-icon name="search" size="25px" color="grey-7"></q-icon>
             </div>
           </div>
 
-          <div :class="!$q.screen.lt.md ? 'q-mr-sm' : 'q-my-sm q-mr-md'">
-            <button class="text-blue-7" :class="$q.screen.lt.md ? 'btn-mobile' : ''"  @click="addContacts" v-if="this.$route.path == '/users'">Add Contacts</button>
-            <button class="text-blue-7" :class="$q.screen.lt.md ? 'btn-mobile' : ''" @click="addAlbums" v-if="this.$route.path == '/albums'">Add Albums</button>
-            <button class="text-blue-7" :class="$q.screen.lt.md ? 'btn-mobile' : ''" @click="addPhotos" v-if="this.$route.path == '/photos'">Add Photos</button>
+          <div :class="!$q.screen.lt.sm ? 'q-mr-sm q-my-sm' : 'q-my-sm q-mr-md'">
+            <button class="text-blue-7" :class="$q.screen.lt.sm ? 'btn-mobile' : ''"  @click="addContacts" v-if="this.$route.path == '/users'">Add Contacts</button>
+            <button class="text-blue-7" :class="$q.screen.lt.sm ? 'btn-mobile' : ''" @click="addAlbums" v-if="this.$route.path == '/albums'">Add Albums</button>
+            <button class="text-blue-7" :class="$q.screen.lt.sm ? 'btn-mobile' : ''" @click="addPhotos" v-if="this.$route.path == '/photos'">Add Photos</button>
           </div>
       </div>
 
@@ -189,49 +189,6 @@
             </q-item-section>
           </q-item>
             
-          
-          <!-- <q-item
-            clickable
-            class="q-mx-sm row items-center"
-          >
-            
-            <q-icon name=" search" size="25px" color="light-blue-7" />
-            <q-item-label> Search </q-item-label>
-          </q-item>
-          <q-item
-            clickable
-            class="q-mx-sm row items-center"
-          >
-            <q-item-section
-                no-wrap
-              >
-              <q-icon name="forum" size="25px" color="light-blue-7" />
-            </q-item-section>
-          </q-item>
-          <q-item
-            clickable
-            class="q-mx-sm row items-center"
-          >
-            <q-item-section
-                no-wrap
-              >
-              <q-icon name="flag" size="25px" color="light-blue-7" />
-            </q-item-section>
-          </q-item>
-          <q-item
-            clickable
-            class="q-mx-sm flex justify-center"
-          >
-            <q-item-section
-                no-wrap
-              >
-              <div class="row justify-between items-center user-info">
-                <span class="q-mr-sm">Hi, </span>
-                <span class="q-mr-sm">Admin</span>
-                <span class="button">A</span>
-              </div>
-            </q-item-section>
-          </q-item> -->
         </q-list>
       </q-drawer>
 
