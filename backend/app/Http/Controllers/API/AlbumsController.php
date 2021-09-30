@@ -14,10 +14,14 @@ class AlbumsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $albums = Album::with('user')->latest()->paginate(10);
+        $albums = Album::with(['user', 'photos'])->latest()->paginate(10);
         
+        if($request->has('all')){
+            $albums = Album::with(['user', 'photos'])->latest()->get();
+        }   
+
 
         return response()->json([
             'albums' => $albums

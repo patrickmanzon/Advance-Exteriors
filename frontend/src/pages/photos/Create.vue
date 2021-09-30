@@ -7,17 +7,24 @@
                 ref="form"
             >
                 <q-card-section>
-                    <div class="text-h6">Add Albums</div>
+                    <div class="text-h6">Add Photo</div>
                 </q-card-section>
 
                 <div class="q-gutter-md q-px-lg">
                     <div>
-                        <q-input outlined v-model="album.title" label="Title" />
+                        <q-input outlined v-model="photo.title" label="Title" />
                     </div>
                     <div>
-                        <q-select outlined v-model="album.user_id" :options="users" option-value="id" emit-value option-label="label" map-options label="User" />
+                        <q-input outlined v-model="photo.url" label="Url" />
+                    </div>
+                    <div>
+                        <q-input outlined v-model="photo.thumbnail_url" label="Album" />
+                    </div>
+                    <div>
+                        <q-select outlined v-model="photo.album_id" :options="albums" option-value="id" emit-value option-label="label" map-options label="Album" />
                     </div>
                 </div>
+
 
                 <q-card-actions align="right" class="text-primary">
                     <q-btn flat label="Cancel" v-close-popup />
@@ -36,10 +43,12 @@ export default {
     data() {
         return {
             isOpen: false,
-            users: [],
-            album: {
+            albums: [],
+            photo: {
+                album_id: '',
                 title: '',
-                user_id: ''
+                url: '',
+                thumbnail_url: ''
             }
         }
     },
@@ -49,11 +58,11 @@ export default {
             this.isOpen = true
         },
         onSubmit() {
-            api.post(`/api/albums`, this.album)
+            api.post(`/api/photos`, this.photo)
                 .then(({data}) => {
                     this.$q.notify({
                         type: 'positive',
-                        message: 'User Created!',
+                        message: 'Photo Created!',
                         position: 'bottom'
                     })
 
@@ -61,30 +70,32 @@ export default {
 
                     this.isOpen = false
 
-                    this.$emit('albumCreated');
+                    this.$emit('photoCreated');
 
                 });
         },
         resetForm() {
-            this.user = {
+            this.photo = {
+                album_id: '',
                 title: '',
-                user_id: ''
+                url: '',
+                thumbnail_url: ''
             }
         },
-        getUsers() {
-            api.get(`/api/users?all=1`)
+        getAlbums() {
+            api.get(`/api/albums?all=1`)
                 .then(({data}) => {
-                    this.users = data.users.map(user => {
+                    this.albums = data.albums.map(album => {
                         return {
-                            label: user.name,
-                            id: user.id
+                            label: album.title,
+                            id: album.id
                         }
                     });
                 });
         }
     },
     created() {
-        this.getUsers()
+        this.getAlbums()
     }
 
 

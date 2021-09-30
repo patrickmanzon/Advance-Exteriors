@@ -3,7 +3,7 @@
     
         <div class="q-pa-md">
             <q-table
-            :data="albums"
+            :data="photos"
             :columns="columns"
             row-key="name"
             :hide-pagination="true" 
@@ -17,16 +17,13 @@
                         <span class="q-mr-sm"  size="12px" text-color="grey-8"  @click="showEdit(props.row)">
                             Edit
                         </span>
-                        <span class="q-mr-sm" size="12px" text-color="grey-8"  @click="deleteAlbum(props.row)">
+                        <span class="q-mr-sm" size="12px" text-color="grey-8"  @click="deletePhoto(props.row)">
                             Delete
                         </span>
                     </template>
                     <template v-else>
-                        <q-btn rounded size="12px" flat text-color="grey-8">
-                            <router-link :to="{name:'album-photos', params: { id: props.row.id }}" class="text-grey-8"><q-icon name="image"></q-icon></router-link>
-                        </q-btn>
                         <q-btn class="q-mr-sm" unelevated size="12px" text-color="grey-8" icon="edit" @click="showEdit(props.row)"/>
-                        <q-btn class="q-mr-sm" unelevated size="12px" text-color="grey-8" icon="delete_outline" @click="deleteAlbum(props.row)"/>
+                        <q-btn class="q-mr-sm" unelevated size="12px" text-color="grey-8" icon="delete_outline" @click="deletePhoto(props.row)"/>
                     </template>
 
                 </q-td>
@@ -44,11 +41,8 @@
                                 <q-item-label>{{ col.name + ' : ' +col.value }}</q-item-label>
                             </q-item-section>
                             <q-item-section v-else class="row justify-between">
-                                <q-btn rounded class="q-mb-sm"  size="12px" text-color="grey-8">
-                                    <router-link :to="{name:'album-photos', params: { id: props.row.id }}" class="text-grey-8 w-full" style="display:block;width:100%;"><q-icon name="collections"></q-icon></router-link>
-                                </q-btn>
                                 <q-btn class="q-mb-sm" rounded size="12px" text-color="grey-8" icon="edit" @click="showEdit(props.row)"/>
-                                <q-btn class="q-mb-sm" rounded size="12px" text-color="grey-8" icon="delete_outline" @click="deleteAlbum(props.row)"/>
+                              <q-btn class="q-mb-sm" rounded size="12px" text-color="grey-8" icon="delete_outline" @click="deletePhoto(props.row)"/>
                             </q-item-section>
                         </q-item>
                     </q-list>
@@ -65,9 +59,9 @@
                 @click="next" :disable="!nextPage"/>
             </div>
 
-            <Edit ref="edit" @albumUpdated="getAlbums"/>
-            <Create ref="create" @albumCreated="getAlbums"/>
-            <Delete ref="delete" @albumDeleted="getAlbums"/>
+            <Edit ref="edit" @photoUpdated="getPhotos"/>
+            <Create ref="create" @photoCreated="getPhotos"/>
+            <Delete ref="delete" @photoDeleted="getPhotos"/>
 
 
         </div>
@@ -78,9 +72,9 @@
 <script>
 
 import { api } from 'boot/axios'
-import Edit from 'pages/albums/Edit.vue'
-import Create from 'pages/albums/Create.vue'
-import Delete from 'pages/albums/Delete.vue'
+import Edit from 'pages/photos/Edit.vue'
+import Create from 'pages/photos/Create.vue'
+import Delete from 'pages/photos/Delete.vue'
 
 export default {
     components: {
@@ -106,13 +100,26 @@ export default {
           field: "title",
         },
         {
-          name: "user",
+          name: "url",
           align: "left",
-          label: "USER",
-          field: row => row.user.name,
+          label: "URL",
+          field: 'url',
+        },
+        {
+          name: "thumbnail_url",
+          align: "left",
+          label: "THUMBNAIL URL",
+          field: 'thumbnail_url',
+        },
+        {
+          name: "album",
+          align: "left",
+          label: "ALBUM",
+          field: row => row.album.title,
         },
         { name: 'action', label: 'ACTION', field: 'action', align: "left"}
       ],
+      photos: [],
       albums: [],
       nextPage: null,
       prevPage: null
@@ -121,35 +128,36 @@ export default {
   },
 
   created() {
-    this.getAlbums();
+    this.getPhotos();
 
-    this.$root.$on('addAlbums', () => {
+    this.$root.$on('addPhotos', () => {
         this.$refs.create.show()
     })
-
 
   },
 
   methods: {
-    getAlbums(page = 1) {
-        api.get(`/api/albums?page=${page}`)
+    getPhotos(page = 1) {
+        api.get(`/api/albums/${this.$route.params.id}/photos?page=${page}`)
             .then(({data}) => {
-                this.albums = data.albums.data
-                this.nextPage = !!data.albums.next_page_url ? data.albums.next_page_url.split('page=')[1] : null
-                this.prevPage = !!data.albums.prev_page_url ? data.albums.prev_page_url.split('page=')[1] : null
+
+                this.photos = data.photos.data
+                this.nextPage = !!data.photos.next_page_url ? data.photos.next_page_url.split('page=')[1] : null
+                this.prevPage = !!data.photos.prev_page_url ? data.photos.prev_page_url.split('page=')[1] : null
+                console.log(this.photos);
             });
     },
     previous() {
-        this.getAlbums(this.prevPage);
+        this.getPhotos(this.prevPage);
     },
     next() {
-        this.getAlbums(this.nextPage);
+        this.getPhotos(this.nextPage);
     },
-    showEdit(album) {
-        this.$refs.edit.show(album);
+    showEdit(photo) {
+        this.$refs.edit.show(photo);
     },
-    deleteAlbum(album) {
-        this.$refs.delete.show(album);
+    deletePhoto(photo) {
+        this.$refs.delete.show(photo);
     }
   }
 };

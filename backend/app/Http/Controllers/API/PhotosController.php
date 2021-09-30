@@ -16,7 +16,7 @@ class PhotosController extends Controller
      */
     public function index()
     {
-        $photos = Photo::all();
+        $photos = Photo::with('album.user')->latest()->paginate(10);
 
         return response()->json([
             'photos' => $photos

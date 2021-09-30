@@ -8,7 +8,7 @@
             row-key="name"
             :hide-pagination="true" 
             :rows-per-page-options="[0]"
-            :grid="$q.platform.is.mobile"
+            :grid="$q.screen.lt.md"
             >
 
             <template v-slot:body-cell-status="props">
@@ -21,20 +21,39 @@
 
             <template v-slot:body-cell-action="props">
                 <q-td :props="props">
-                    <template v-if="$q.platform.is.mobile">
-                        <span rounded size="12px" text-color="grey-8"  @click="showEdit(props.row)">
-                            Edit
-                        </span>
-                        <span rounded size="12px" text-color="grey-8"  @click="deleteUser(props.row)">
-                            Delete
-                        </span>
-                    </template>
-                    <template v-else>
-                        <q-btn rounded size="12px" text-color="grey-8" icon="edit" @click="showEdit(props.row)"/>
-                        <q-btn rounded size="12px" text-color="grey-8" icon="delete_outline" @click="deleteUser(props.row)"/>
-                    </template>
-
+                    <div class="row items-center">
+                        <q-btn rounded size="12px" flat text-color="grey-8">
+                            <router-link :to="{name:'user-albums', params: { id: props.row.id }}" class="text-grey-8"><q-icon name="collections"></q-icon></router-link>
+                        </q-btn>
+                        <!-- <q-btn rounded size="12px" flat text-color="grey-8" icon="collections" /> -->
+                        <q-btn rounded size="12px" flat text-color="grey-8" icon="edit" @click="showEdit(props.row)"/>
+                        <q-btn rounded size="12px" flat text-color="grey-8" icon="delete_outline" @click="deleteUser(props.row)"/>
+                    </div>
                 </q-td>
+            </template>
+
+            <template v-slot:item="props">
+                <div
+                class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
+                :style="props.selected ? 'transform: scale(0.95);' : ''"
+                >
+                <q-card>
+                    <q-list dense>
+                        <q-item v-for="col in props.cols" :key="col.name">
+                            <q-item-section v-if="col.name != 'action'">
+                                <q-item-label>{{ col.name + ' : ' +col.value }}</q-item-label>
+                            </q-item-section>
+                            <q-item-section v-else>
+                                <q-btn rounded size="12px" class="q-mb-sm">
+                                    <router-link :to="{name:'user-albums', params: { id: props.row.id }}" class="text-grey-8" style="width: 100%;"><q-icon name="collections"></q-icon></router-link>
+                                </q-btn>
+                                <q-btn rounded size="12px" text-color="grey-8" icon="edit" @click="showEdit(props.row)" class="q-mb-sm"/>
+                                <q-btn rounded size="12px" text-color="grey-8" icon="delete_outline" @click="deleteUser(props.row)" class="q-mb-sm"/>
+                            </q-item-section>
+                        </q-item>
+                    </q-list>
+                </q-card>
+                </div>
             </template>
 
 

@@ -18,7 +18,7 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::latest()->paginate(10);
+        $users = User::with('albums.photos')->latest()->paginate(10);
 
         if($request->has('all')) {
             $users =  User::latest()->get();

@@ -11,24 +11,13 @@
             :grid="$q.screen.lt.md"
             >
 
-            <template v-slot:body-cell-action="props">
+            <template v-slot:body-cell-action="props"> 
                 <q-td :props="props">
-                    <template v-if="$q.screen.lt.md">
-                        <span class="q-mr-sm"  size="12px" text-color="grey-8"  @click="showEdit(props.row)">
-                            Edit
-                        </span>
-                        <span class="q-mr-sm" size="12px" text-color="grey-8"  @click="deleteAlbum(props.row)">
-                            Delete
-                        </span>
-                    </template>
-                    <template v-else>
-                        <q-btn rounded size="12px" flat text-color="grey-8">
-                            <router-link :to="{name:'album-photos', params: { id: props.row.id }}" class="text-grey-8"><q-icon name="image"></q-icon></router-link>
-                        </q-btn>
-                        <q-btn class="q-mr-sm" unelevated size="12px" text-color="grey-8" icon="edit" @click="showEdit(props.row)"/>
-                        <q-btn class="q-mr-sm" unelevated size="12px" text-color="grey-8" icon="delete_outline" @click="deleteAlbum(props.row)"/>
-                    </template>
-
+                    <q-btn unelevated  flat size="12px" text-color="grey-8">
+                        <router-link :to="{name:'user-albums', params: { id: props.row.id }}" class="text-grey-8"><q-icon name="collections"></q-icon></router-link>
+                    </q-btn>
+                    <q-btn class="q-mr-sm" flat unelevated size="12px" text-color="grey-8" icon="edit" @click="showEdit(props.row)"/>
+                    <q-btn class="q-mr-sm" flat unelevated size="12px" text-color="grey-8" icon="delete_outline" @click="deleteAlbum(props.row)"/>
                 </q-td>
             </template>
 
@@ -132,8 +121,11 @@ export default {
 
   methods: {
     getAlbums(page = 1) {
-        api.get(`/api/albums?page=${page}`)
+        console.log("Hello"); 
+        api.get(`/api/users/${this.$route.params.id}/albums?page=${page}`)
             .then(({data}) => {
+                console.log("Hello"); 
+
                 this.albums = data.albums.data
                 this.nextPage = !!data.albums.next_page_url ? data.albums.next_page_url.split('page=')[1] : null
                 this.prevPage = !!data.albums.prev_page_url ? data.albums.prev_page_url.split('page=')[1] : null

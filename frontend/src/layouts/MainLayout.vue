@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-grey-3">
     <Header />
-
+      
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
@@ -72,15 +72,21 @@ const linksData = [
     key: Math.random()
   },
   {
-    title: 'Employee',
-    icon: 'grid_view',
-    link: '#',
+    title: 'Users',
+    icon: 'people',
+    link: '/users',
     key: Math.random()
   },
   {
-    title: 'Calendar',
-    icon: 'event',
-    link: '#',
+    title: 'Albums',
+    icon: 'collections',
+    link: '/albums',
+    key: Math.random()
+  },
+  {
+    title: 'Photos',
+    icon: 'photo',
+    link: '/photos',
     key: Math.random()
   },
   {
@@ -103,12 +109,6 @@ const linksData = [
   {
     title: 'Calendar',
     icon: 'event',
-    link: '#',
-    key: Math.random()
-  },
-  {
-    title: 'Users',
-    icon: 'people',
     link: '#',
     key: Math.random()
   },
@@ -157,7 +157,7 @@ export default {
     return {
       leftDrawerOpen: false,
       miniState:false,
-      essentialLinks: linksData
+      essentialLinks: linksData,
     }
   },
   created() {

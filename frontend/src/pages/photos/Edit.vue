@@ -6,15 +6,21 @@
                 @submit.prevent="onSubmit"
             >
                 <q-card-section>
-                    <div class="text-h6">Edit {{ album.title }}</div>
+                    <div class="text-h6">Edit {{ photo.title }}</div>
                 </q-card-section>
 
                 <div class="q-gutter-md q-px-lg">
                     <div>
-                        <q-input outlined v-model="album.title" label="Title" />
+                        <q-input outlined v-model="photo.title" label="Title" />
                     </div>
                     <div>
-                        <q-select outlined v-model="album.user_id" :options="users" option-value="id" emit-value option-label="label" map-options label="User" />
+                        <q-input outlined v-model="photo.url" label="Url" />
+                    </div>
+                    <div>
+                        <q-input outlined v-model="photo.thumbnail_url" label="Album" />
+                    </div>
+                    <div>
+                        <q-select outlined v-model="photo.album_id" :options="albums" option-value="id" emit-value option-label="label" map-options label="Album" />
                     </div>
                 </div>
 
@@ -36,39 +42,41 @@ export default {
     data() {
         return {
             isEdit: false,
-            users: [],
-            album: {
+            albums: [],
+            photo: {
+                album_id: '',
                 title: '',
-                user_id: ''
+                url: '',
+                thumbnail_url: ''
             }
         }
     },
 
     methods: {
-        show(album) {
+        show(photo) {
             this.isEdit = true
-            this.album = album
+            this.photo = photo
         },
         onSubmit() {
-            api.put(`/api/albums/${this.album.id}`, this.album)
+            api.put(`/api/photos/${this.photo.id}`, this.photo)
                 .then(({data}) => {
                     this.$q.notify({
                         type: 'positive',
-                        message: 'Album Updated!',
+                        message: 'Photo Updated!',
                         position: 'bottom'
                     })
 
-                    this.$emit('albumUpdated');
+                    this.$emit('photoUpdated');
                     
                 });
         },
-        getUsers() {
-            api.get(`/api/users?all=1`)
+        getAlbums() {
+            api.get(`/api/albums?all=1`)
                 .then(({data}) => {
-                    this.users = data.users.map(user => {
+                    this.albums = data.albums.map(album => {
                         return {
-                            label: user.name,
-                            id: user.id
+                            label: album.title,
+                            id: album.id
                         }
                     });
                 });
@@ -76,7 +84,7 @@ export default {
     },
 
     created() {
-        this.getUsers();
+        this.getAlbums();
     }
 
 

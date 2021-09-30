@@ -3,8 +3,7 @@
     <q-item
       clickable
       tag="a"
-      target="_blank"
-      :href="link"
+      :to="link"
       class="row items-center"
       v-if="!label"
     >
@@ -21,7 +20,6 @@
     </q-item>
 
     <q-item
-      target="_blank"
       :href="link"
       class="row items-center"
       v-else

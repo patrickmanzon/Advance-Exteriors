@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('users/{user}/albums', '\App\Http\Controllers\API\UserAlbumsController@index');
+Route::get('albums/{album}/photos', '\App\Http\Controllers\API\AlbumPhotoController@index');
 Route::resource('users', '\App\Http\Controllers\API\UsersController');
 Route::resource('albums', '\App\Http\Controllers\API\AlbumsController');
 Route::resource('photos', '\App\Http\Controllers\API\PhotosController');

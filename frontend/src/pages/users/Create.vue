@@ -1,7 +1,7 @@
 <template>
 
     <q-dialog v-model="isOpen" persistent>
-        <q-card :style="$q.platform.is.mobile ? 'min-width: 300px' : 'min-width: 600px'">
+        <q-card :style="$q.screen.lt.md ? 'min-width: 300px' : 'min-width: 600px'">
             <q-form
                 @submit.prevent="onSubmit"
                 ref="form"
